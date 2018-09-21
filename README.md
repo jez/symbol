@@ -85,6 +85,14 @@ TODO(jez) Write a quickstart
 - TODO(jez) CLI tests
 - TODO(jez) `symbol make | cat` is broken...?
 
+## Testing
+
+Implement a test framework, then add tests for:
+
+- test that the scaffold code typechecks
+- shellcheck the `symbol` script
+- `symbol clean` with no `TARGET.cm` and no `TARGET.mlb`
+
 ## License
 
 [![MIT License](https://img.shields.io/badge/license-MIT-blue.svg)](https://jez.io/MIT-LICENSE.txt)
