@@ -1,0 +1,10 @@
+.*.sw[nop]
+*~
+tags
+
+.cm
+
+.symbol-work
+
+*.du
+*.ud

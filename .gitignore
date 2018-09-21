@@ -1,0 +1,14 @@
+# vim, emacs, ctags
+.*.sw[nop]
+*~
+tags
+
+# SML/NJ CM folder
+.cm
+
+# Makefile staging folder
+.symbol-work
+
+# MLton def-use and use-def files
+*.du
+*.ud

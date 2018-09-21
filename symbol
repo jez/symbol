@@ -1,0 +1,216 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+# cd into folder where the 'symbol' script is located, or quit (defensive)
+BINDIR="$(perl -MCwd -le 'print Cwd::abs_path(shift)' "${BASH_SOURCE[0]}")"
+cd "$(dirname "$BINDIR")" || exit 1
+
+TARGET=prettier-sml
+
+# ----- logging & colors ------------------------------------------------------
+
+red=$'\x1b[0;31m'
+green=$'\x1b[0;32m'
+yellow=$'\x1b[0;33m'
+cyan=$'\x1b[0;36m'
+cnone=$'\x1b[0m'
+
+# Detects whether we can add colors or not
+# http://stackoverflow.com/a/911213
+in_color() {
+  [ -t 1 ] && echo -n "$1"
+  cat -
+  [ -t 1 ] && echo -n "$cnone"
+}
+
+info() {
+  echo -n "[INFO] " | in_color "$cyan"
+  echo "$@"
+}
+
+warn() {
+  echo "[WARN]" "$@" | in_color "$yellow"
+}
+
+error() {
+  echo -n "[ERR!] " | in_color "$red"
+  echo "$@"
+}
+
+success() {
+  echo -n "[ OK ] " | in_color "$green"
+  echo "$@"
+}
+
+# ----- helper functions ------------------------------------------------------
+
+tidy_symbol_work() {
+  mkdir -p .symbol-work
+
+  # This guards against the case where make won't build the target because
+  # the last command just built the target, but for the wrong "with=" value.
+  if [ -f .symbol-work/with ] && ! grep -q "^$WITH\$" .symbol-work/with; then
+    rm -rf .symbol-work/bin
+  fi
+
+  rm -f .symbol-work/error.log
+  rm -f .symbol-work/debug.log
+}
+
+ensure_no_argv() {
+  if [ "${#ARGV[@]}" -ne 0 ]; then
+    error "This command does not accept positional arguments."
+    info  "argv: ${ARGV[*]}"
+    exit 1
+  fi
+}
+
+# TODO(jez) Also show help output from global 'system' command.
+print_help() {
+  cat <<EOF
+
+symbol: A build tool for Standard ML
+
+Project commands:
+  symbol make [with=(smlnj|mlton)]
+  symbol install [with=(smlnj|mlton)] [prefix=<prefix>]
+  symbol clean
+
+Options:
+  with=(smlnj|mlton)   Which toolchain to use to build the project.
+                       [default: smlnj, unless no *.cm file]
+  prefix=<prefix>      Where to install the resulting binaries to.
+                       [default: $HOME/.local]
+
+EOF
+}
+
+# ----- option parsing --------------------------------------------------------
+
+SUBCOMMAND="$1"
+shift
+
+WITH=""
+MAKE_VARIABLES=()
+ARGV=()
+
+while [[ $# -gt 0 ]]; do
+  case $1 in
+    with=*)
+      # removes 'with=' prefix
+      WITH=${1#with=}
+      shift
+      ;;
+    *=*)
+      MAKE_VARIABLES+=("$1")
+      shift
+      ;;
+    -h|--help)
+      print_help
+      exit
+      ;;
+    -*)
+      echo
+      error "Unrecognized option: '$1'"
+      print_help
+      exit 1
+      ;;
+    *)
+      ARGV+=("$1")
+      shift
+      ;;
+  esac
+done
+
+# Attempt to default with= to smlnj or mlton depending on what files exist
+if [ -z "$WITH" ]; then
+  if [ "$SUBCOMMAND" = 'install' ] && [ -f "$TARGET.mlb" ]; then
+    WITH=mlton
+  elif [ -f "$TARGET.cm" ]; then
+    WITH=smlnj
+  elif [ -f "$TARGET.mlb" ]; then
+    WITH=mlton
+  fi
+fi
+
+if [ "$WITH" != smlnj ] && [ "$WITH" != mlton ]; then
+  echo
+  error "Cannot build using 'with=$WITH'. Valid values: smlnj, mlton"
+  print_help
+  exit 1
+fi
+
+# ----- main ------------------------------------------------------------------
+
+main() {
+  case "$SUBCOMMAND" in
+    make|install)
+      tidy_symbol_work
+      ensure_no_argv
+
+      # We do some crazy fd dupping here so that the make subprocess can log
+      # directly to our stdout, even though we redirect all of its other output
+      #
+      # child (make)  "maps to"  parent (symbol)
+      #   fd 3           ->        <stdout>
+      #   <stdout>       ->        symbol.log
+      #   <stderr>       ->        symbol.log
+
+      # Check to see if "make: Nothing to be done for `make'" would be printed
+      if make -f .symbol.mk --question "$SUBCOMMAND" "with=$WITH" \
+          "${MAKE_VARIABLES[@]}" 3>&1 > .symbol-work/debug.log 2>&1; then
+        return
+      fi
+
+      # Build succeeded. The make target should have printed output.
+      if make -f .symbol.mk "$SUBCOMMAND" "with=$WITH" \
+          "${MAKE_VARIABLES[@]}" 3>&1 > .symbol-work/debug.log 2>&1; then
+        return
+      fi
+
+      if [ -f .symbol-work/error.log ]; then
+        # Normal failure.
+        # error.log is populated from SML/NJ / MLton-related commands.
+        cat .symbol-work/error.log
+        error "Building with '$WITH' failed. See output above."
+        info  "(Debug output is in .symbol-work/debug.log)"
+      elif [ -f .symbol-work/debug.log ]; then
+        # Exceptional failure. Probably something is wrong in the Makefile.
+        cat .symbol-work/debug.log
+        error "Build failed for unknown reason. Debugging output is above."
+        exit 1
+      else
+        # Super exceptional failure. We don't even have makefile debug output.
+        error "Build failed for unknown reason. If you can reproduce the failure,"
+        error "please report an issue:  https://github.com/jez/symbol/issues"
+        exit 1
+      fi
+      ;;
+
+    clean)
+      make -f .symbol.mk clean
+      ;;
+
+    log)
+      # Helper subcommand to let logging commands be called from the makefile
+      case ${ARGV[0]} in
+        info|warn|error|success)
+          "${ARGV[@]}"
+          ;;
+        *)
+          error "Unrecognized log command: '${ARGV[0]}'"
+          exit 1
+          ;;
+      esac
+      ;;
+
+    *)
+      error "Unrecognized subcommand: '$SUBCOMMAND'"
+      print_help
+      exit 1
+      ;;
+  esac
+}
+
+main "$@"
