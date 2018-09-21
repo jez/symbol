@@ -66,6 +66,19 @@ ensure_no_argv() {
   fi
 }
 
+ensure_with() {
+  if [ -z "$WITH" ]; then
+    error "Could not infer what to build the project with (with='')."
+    error "Is there a $target.cm file or $target.mlb file in this folder?"
+    print_help
+    exit 1
+  elif [ "$WITH" != smlnj ] && [ "$WITH" != mlton ]; then
+    error "Cannot build using 'with=$WITH'. Valid values: smlnj, mlton"
+    print_help
+    exit 1
+  fi
+}
+
 # TODO(jez) Also show help output from global 'system' command.
 print_help() {
   cat <<EOF
@@ -134,13 +147,6 @@ if [ -z "$WITH" ]; then
   fi
 fi
 
-if [ "$WITH" != smlnj ] && [ "$WITH" != mlton ]; then
-  echo
-  error "Cannot build using 'with=$WITH'. Valid values: smlnj, mlton"
-  print_help
-  exit 1
-fi
-
 # ----- main ------------------------------------------------------------------
 
 main() {
@@ -148,6 +154,7 @@ main() {
     make|install)
       tidy_symbol_work
       ensure_no_argv
+      ensure_with
 
       # We do some crazy fd dupping here so that the make subprocess can log
       # directly to our stdout, even though we redirect all of its other output
