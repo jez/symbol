@@ -1,5 +1,6 @@
-structure Main =
+structure Main : MAIN =
 struct
   fun main (arg0, argv) =
-    print "Hello, world!"
+    (print "Hello, world!";
+     OS.Process.success)
 end

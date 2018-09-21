@@ -1,5 +1,6 @@
 $(SML_LIB)/basis/basis.mlb
 
 src/main.sml
+src/main.sig
 
 call-main.sml
