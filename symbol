@@ -6,7 +6,7 @@ set -euo pipefail
 BINDIR="$(perl -MCwd -le 'print Cwd::abs_path(shift)' "${BASH_SOURCE[0]}")"
 cd "$(dirname "$BINDIR")" || exit 1
 
-TARGET=prettier-sml
+target=TARGET
 
 # ----- logging & colors ------------------------------------------------------
 
@@ -125,11 +125,11 @@ done
 
 # Attempt to default with= to smlnj or mlton depending on what files exist
 if [ -z "$WITH" ]; then
-  if [ "$SUBCOMMAND" = 'install' ] && [ -f "$TARGET.mlb" ]; then
+  if [ "$SUBCOMMAND" = 'install' ] && [ -f "$target.mlb" ]; then
     WITH=mlton
-  elif [ -f "$TARGET.cm" ]; then
+  elif [ -f "$target.cm" ]; then
     WITH=smlnj
-  elif [ -f "$TARGET.mlb" ]; then
+  elif [ -f "$target.mlb" ]; then
     WITH=mlton
   fi
 fi
