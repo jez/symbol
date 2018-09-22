@@ -83,7 +83,6 @@ TODO(jez) Write a quickstart
 - TODO(jez) README, website
 - TODO(jez) Homebrew formula
 - TODO(jez) CLI tests
-- TODO(jez) `symbol make | cat` is broken...?
 
 ## Testing
 

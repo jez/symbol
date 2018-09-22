@@ -16,31 +16,41 @@ yellow=$'\x1b[0;33m'
 cyan=$'\x1b[0;36m'
 cnone=$'\x1b[0m'
 
+if [ -t 1 ]; then
+  USE_COLOR=1
+else
+  USE_COLOR=0
+fi
+
 # Detects whether we can add colors or not
 # http://stackoverflow.com/a/911213
 in_color() {
-  [ -t 1 ] && echo -n "$1"
-  cat -
-  [ -t 1 ] && echo -n "$cnone"
+  local color="$1"
+  shift
+
+  if [ "$USE_COLOR" = "1" ]; then
+    echo "$color$*$cnone"
+  else
+    echo "$*"
+  fi
 }
 
 info() {
-  echo -n "[INFO] " | in_color "$cyan"
-  echo "$@"
+  echo "$(in_color "$cyan" "[INFO]") $*"
 }
 
 warn() {
-  echo "[WARN]" "$@" | in_color "$yellow"
+  # Entire warning message is yellow, because it won't halt the program, but we
+  # still really want to catch the user's attention.
+  in_color "$yellow" "[WARN] $*"
 }
 
 error() {
-  echo -n "[ERR!] " | in_color "$red"
-  echo "$@"
+  echo "$(in_color "$red" "[ERR!]") $*"
 }
 
 success() {
-  echo -n "[ OK ] " | in_color "$green"
-  echo "$@"
+  echo "$(in_color "$green" "[ OK ]") $*"
 }
 
 # ----- helper functions ------------------------------------------------------
@@ -86,11 +96,11 @@ print_help() {
 symbol: A build tool for Standard ML
 
 Project commands:
-  symbol make [with=(smlnj|mlton)]
-  symbol install [with=(smlnj|mlton)] [prefix=<prefix>]
+  symbol make [make variables]
+  symbol install [make variables]
   symbol clean
 
-Options:
+Make variables:
   with=(smlnj|mlton)   Which toolchain to use to build the project.
                        [default: smlnj, unless no *.cm file]
   prefix=<prefix>      Where to install the resulting binaries to.
