@@ -61,7 +61,7 @@ tidy_symbol_work() {
   # This guards against the case where make won't build the target because
   # the last command just built the target, but for the wrong "with=" value.
   if [ -f .symbol-work/with ] && ! grep -q "^$WITH\$" .symbol-work/with; then
-    rm -rf .symbol-work/bin
+    rm -f ".symbol-work/bin/$target"
   fi
 
   rm -f .symbol-work/error.log
@@ -89,7 +89,6 @@ ensure_with() {
   fi
 }
 
-# TODO(jez) Also show help output from global 'system' command.
 print_help() {
   cat <<EOF
 

@@ -180,4 +180,4 @@ endif
 		 -prefer-abs-paths true \
 		 -show-def-use $(target).du \
 		 -output "$(@)" \
-		 $(target).mlb | tee .symbol-work/error.log
+		 $(target).mlb 2>&1 | tee .symbol-work/error.log
