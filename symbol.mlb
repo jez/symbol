@@ -1,6 +1,0 @@
-$(SML_LIB)/basis/basis.mlb
-
-src/main.sig
-src/main.sml
-
-call-main.sml
