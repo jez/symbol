@@ -1,4 +1,0 @@
-(* For symbol testing and development only. *)
-$(SML_LIB)/basis/basis.mlb
-
-scaffold/TARGET.mlb
