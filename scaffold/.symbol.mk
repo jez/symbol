@@ -145,7 +145,7 @@ endif
 	mkdir -p "$(@D)"
 	echo '#!/usr/bin/env bash' > "$@"
 	echo '' >> "$@"
-	echo 'exec $(SML) @SMLcmdname="$$0" @SMLload="HEAP_IMAGE"' >> "$@"
+	echo 'exec $(SML) @SMLcmdname="$$0" @SMLload="HEAP_IMAGE" "$$@"' >> "$@"
 
 # ----- mlton -----
 
