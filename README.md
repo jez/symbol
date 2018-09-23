@@ -53,6 +53,16 @@ TODO(jez) Write a quickstart
 
 ## Tips
 
+TODO(jez) These tips are mostly fragments right now
+
+- You're free to structure your project however you want as long as
+  - it builds cleanly with just your `*.cm` file and/or `*.mlb` file
+    - these files are in the top-level and are named how you want your
+      executable named
+  - these build files export a `Main.main` function
+- in particular, you can pull in dependencies yourself and put them wherever you
+  want (so you can use smackage if you want to)
+
 - Make variables
   - MLTONFLAGS (profiling)
   - target (two executables)
