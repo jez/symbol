@@ -91,6 +91,8 @@ Implement a test framework, then add tests for:
 - test that the scaffold code typechecks
 - shellcheck the `symbol` script
 - `symbol clean` with no `TARGET.cm` and no `TARGET.mlb`
+- two copies of `symbol` and `.symbol.mk` should each be `+1 -1 ~0`
+  - the copies in the scaffold should have
 
 ## License
 
