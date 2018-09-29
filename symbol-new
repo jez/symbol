@@ -1,0 +1,153 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+# Find folder where the script is located.
+# Works even if the executable is a symlink, and on macOS and Linux.
+BINPATH="$(perl -MCwd -le 'print Cwd::abs_path(shift)' "${BASH_SOURCE[0]}")"
+BINDIR="$(dirname "$BINPATH")"
+PREFIX="$(dirname "$BINDIR")"
+SCAFFOLD="$PREFIX/share/symbol/scaffold"
+
+# ----- logging & colors -------------------------------------------------- {{{
+
+red=$'\x1b[0;31m'
+green=$'\x1b[0;32m'
+yellow=$'\x1b[0;33m'
+cyan=$'\x1b[0;36m'
+cnone=$'\x1b[0m'
+
+if [ -t 1 ]; then
+  USE_COLOR=1
+else
+  USE_COLOR=0
+fi
+
+# Detects whether we can add colors or not
+in_color() {
+  local color="$1"
+  shift
+
+  if [ "$USE_COLOR" = "1" ]; then
+    echo "$color$*$cnone"
+  else
+    echo "$*"
+  fi
+}
+
+success() { echo "$(in_color "$green" "[ OK ]") $*"; }
+error() {   echo "$(in_color "$red"   "[ERR!]") $*"; }
+info() {    echo "$(in_color "$cyan"  "[INFO]") $*"; }
+# Color entire warning to get users' attention (because we won't stop).
+warn() { in_color "$yellow" "[WARN] $*"; }
+
+# }}}
+
+# ----- helper functions ------------------------------------------------------
+
+
+print_help() {
+  cat <<EOF
+
+symbol-new: Create a new symbol project
+
+Usage:
+  symbol-new <target>
+
+Options:
+  <target>   The name of your project.
+
+EOF
+}
+
+# ----- option parsing --------------------------------------------------------
+
+TARGET=
+
+while [[ $# -gt 0 ]]; do
+  case $1 in
+    -*)
+      error "Unrecognized option: $1"
+      print_help
+      exit 1
+      ;;
+    *)
+      if [ -z "$TARGET" ]; then
+        TARGET="$1"
+        shift
+      else
+        error "Extra argument: '$1'"
+        print_help
+        exit 1
+      fi
+      ;;
+  esac
+done
+
+if [ -z "$TARGET" ]; then
+  error "Missing required argument: <target>"
+  print_help
+  exit 1
+elif grep '[^0-9A-Za-z_-]' <<< "$TARGET"; then
+  error "<target> ($TARGET) must contain only alphanumeric, underscore, or hyphen"
+  print_help
+  exit 1
+fi
+
+# ----- main ------------------------------------------------------------------
+
+main() {
+  info "Making directory '$TARGET/'..."
+  # We intentionally error if this folder already exists
+  mkdir "$TARGET"
+
+  if ! [ -d "$SCAFFOLD" ]; then
+    error "Installation is corrupt. Missing required folder:"
+    error "    $SCAFFOLD"
+    exit 1
+  fi
+
+  # Remember the target_dir for when we cd into $SCAFFOLD
+  local target_dir
+  pushd "$TARGET" &> /dev/null
+  target_dir="$(pwd)"
+  popd &> /dev/null
+
+  # So that ** shows hidden files
+  shopt -s globstar dotglob
+
+  # cd into $SCAFFOLD so that all filenames are relative
+  pushd "$SCAFFOLD" &> /dev/null
+  for file in **; do
+    if ! [ -f "$file" ]; then
+      # skip over directories
+      continue
+    fi
+
+    target_file="$target_dir/$(sed -e "s/TARGET/$TARGET/" <<< "$file")"
+    mkdir -p "$(dirname "$target_file")"
+    sed -e "s/TARGET/$TARGET/" "$file" > "$target_file"
+  done
+  popd &> /dev/null
+
+  # The sed makes a new file which doesn't have permissions
+  chmod +x "$TARGET/symbol"
+
+  # Get rid of any generated files we might have copied
+  pushd "$TARGET" &> /dev/null
+  symbol clean
+  popd &> /dev/null
+
+  success "Created project:"
+  echo
+
+  if which tree &> /dev/null; then
+    tree -a "$TARGET"
+  else
+    find "$TARGET" -type f
+  fi
+}
+
+main
+
+# vim:fdm=marker
