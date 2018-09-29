@@ -77,9 +77,6 @@ TODO(jez) These tips are mostly fragments right now
 
 ## TODO
 
-- TODO(jez) `new <target>`
-  - should initialize the scaffold
-  - creates a new folder
 - TODO(jez) `setup [<target>]`
   - should just add `symbol` and `.symbol.mk`
   - should error and suggest `symbol upgrade` if these files exist
