@@ -3,8 +3,8 @@
 set -euo pipefail
 
 # cd into folder where the 'symbol' script is located, or quit (defensive)
-BINDIR="$(perl -MCwd -le 'print Cwd::abs_path(shift)' "${BASH_SOURCE[0]}")"
-cd "$(dirname "$BINDIR")" || exit 1
+BINPATH="$(perl -MCwd -le 'print Cwd::abs_path(shift)' "${BASH_SOURCE[0]}")"
+cd "$(dirname "$BINPATH")" || exit 1
 
 target=TARGET
 
