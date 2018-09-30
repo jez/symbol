@@ -12,3 +12,8 @@ tags
 # MLton def-use and use-def files
 *.du
 *.ud
+
+# some generated folders that I use for testing a lot
+bin
+share
+foo
