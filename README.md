@@ -81,6 +81,7 @@ TODO(jez) These tips are mostly fragments right now
 - TODO(jez) Homebrew formula
 - TODO(jez) README, website
 - TODO(jez) CLI tests
+- TODO(jez) Update DECISIONS.md for symbol-new being in shell
 
 ## Testing
 
@@ -91,6 +92,16 @@ Implement a test framework, then add tests for:
 - `symbol clean` with no `TARGET.cm` and no `TARGET.mlb`
 - two copies of `symbol` and `.symbol.mk` should each be `+1 -1 ~0`
   - the copies in the scaffold should have
+
+## Developer Notes
+
+To bump the version:
+
+- Update the VERSION in `symbol-new`
+- Commit the change, and create a new git tag with that version
+- Make a new release on GitHub (`hub release`)
+- Update the Homebrew formula
+
 
 ## License
 
