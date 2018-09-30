@@ -12,6 +12,8 @@ BINDIR="$(dirname "$BINPATH")"
 PREFIX="$(dirname "$BINDIR")"
 SCAFFOLD="$PREFIX/share/symbol/scaffold"
 
+VERSION="v0.9.0"
+
 # ----- logging & colors -------------------------------------------------- {{{
 
 red=$'\x1b[0;31m'
@@ -84,12 +86,13 @@ install_scaffold() {
       continue
     fi
 
-    # Replace TARGET with in the file names and file contents
+    # Replace TARGET in the file names and file contents
+    # Replace VERSION in the file contents only
 
     target_file="$target_dir/$(sed -e "s/TARGET/$TARGET/" <<< "$file")"
 
     mkdir -p "$(dirname "$target_file")"
-    sed -e "s/TARGET/$TARGET/" "$file" > "$target_file"
+    sed -e "s/TARGET/$TARGET/; s/VERSION/$VERSION/" "$file" > "$target_file"
   done
 
   if [ -f "$target_dir/symbol" ]; then
@@ -131,6 +134,7 @@ symbol-new: Create a new symbol project
 
 Usage:
   symbol-new [options] <target>
+  symbol-new --version
 
 Arguments:
   <target>    The name of the project to be created
@@ -153,6 +157,10 @@ while [[ $# -gt 0 ]]; do
     --empty)
       EMPTY=1
       shift
+      ;;
+    --version)
+      echo "$VERSION"
+      exit
       ;;
     -*)
       error "Unrecognized option: $1"

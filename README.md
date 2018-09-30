@@ -77,16 +77,6 @@ TODO(jez) These tips are mostly fragments right now
 
 ## TODO
 
-- TODO(jez) `setup [<target>]`
-  - should just add `symbol` and `.symbol.mk`
-  - should error and suggest `symbol upgrade` if these files exist
-  - `<target>` defaults to current directory name
-- TODO(jez) `help` and `version` commands
-  - These need to share code between the local and global command
-- TODO(jez) `upgrade`
-  - should this be global or local?
-  - should just update `symbol` and `.symbol.mk`, not scaffolding
-  - have to infer `<target>`
 - TODO(jez) set up CI
 - TODO(jez) Homebrew formula
 - TODO(jez) README, website

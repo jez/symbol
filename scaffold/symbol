@@ -7,6 +7,7 @@ BINPATH="$(perl -MCwd -le 'print Cwd::abs_path(shift)' "${BASH_SOURCE[0]}")"
 cd "$(dirname "$BINPATH")" || exit 1
 
 target=TARGET
+version=VERSION
 
 # ----- logging & colors ------------------------------------------------------
 
@@ -98,6 +99,7 @@ Project commands:
   symbol make [make variables]
   symbol install [make variables]
   symbol clean
+  symbol version
 
 Make variables:
   with=(smlnj|mlton)   Which toolchain to use to build the project.
@@ -224,6 +226,11 @@ main() {
     -h|--help|help)
       print_help
       ;;
+
+    --version|version)
+      echo "$version"
+      ;;
+
     *)
       error "Unrecognized subcommand: '$SUBCOMMAND'"
       print_help
