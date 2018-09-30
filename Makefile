@@ -1,4 +1,4 @@
-prefix := /usr/local
+prefix := $(HOME)/.local
 bindir := $(prefix)/bin
 sharedir := $(prefix)/share/symbol
 
