@@ -149,13 +149,10 @@ TODO(jez) set up https://symbol.sh
 
 TODO(jez) Implement test harness
 
-Implement a test framework, then add tests for:
-
-- test that the scaffold code typechecks
-- shellcheck the `symbol` script
-- `symbol clean` with no `TARGET.cm` and no `TARGET.mlb`
-- two copies of `symbol` and `.symbol.mk` should each be `+1 -1 ~0`
-  - the copies in the scaffold should have
+- run most commands with files missing
+  - `symbol clean` with no `TARGET.cm` and no `TARGET.mlb`
+  - ...
+- grep for `error` logs and try to exercise them all
 
 ## Developer Notes
 
