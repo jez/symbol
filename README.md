@@ -41,14 +41,79 @@ MLBasis files. Symbol's key features are:
   project; just keep using `*.cm` files for SML/NJ and `*.mlb` files for MLton.
 
 
-## Install
+## Install globally
 
-TODO(jez) How to install
+Global installation is **only required** by the collaborators who initially set
+up symbol in a project. The global command is called `symbol-new` and is solely
+for scaffolding new projects. Once a Symbol project has been created, a script
+called `symbol` will exist locally within that project.
+
+### macOS
+
+On macOS, you can use Homebrew:
+
+```bash
+brew install jez/formulae/symbol-new
+```
+
+### From source
+
+You can also install from source:
+
+```bash
+git clone https://github.com/jez/symbol
+cd symbol
+make install
+```
+
+This will install to `~/.local/bin/symbol-new`. If you'd like to install to
+a different prefix, you can pass that to the `make` command. For example,
+
+```bash
+make install prefix=/usr/local
+```
+
+will instead install to `/usr/local/bin/symbol-new`
 
 
 ## Quickstart
 
-TODO(jez) Write a quickstart
+Create a new project with the global command:
+
+- `symbol-new <target>`
+
+  This creates a new folder called `<target>` and initializes it with build
+  files and a "Hello, world!" program to get your project started.
+
+Once the global `symbol-new` has been used to scaffold a new project, these
+commands are availble:
+
+- `symbol make`
+
+  Build the project (by default uses SML/NJ)
+
+- `symbol make with=mlton`
+
+  Build the project with MLton, which will take longer but generate a faster
+  executable.
+
+- `symbol install`, `symbol install with=mlton`
+
+  Builds the project (optionally with MLton) and installs the resulting
+  executable into the folder `~/.local/bin`.
+
+  You might want to check that this folder is on your `$PATH` variable.
+
+For complete usage information, be sure to check the help output of both the
+global and local command:
+
+```bash
+# Global
+symbol-new --help
+
+# Local
+symbol --help
+```
 
 
 ## Tips
