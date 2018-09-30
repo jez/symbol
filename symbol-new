@@ -110,7 +110,7 @@ finish_nonempty_project() {
   success "Created project:"
   echo
 
-  if which tree &> /dev/null; then
+  if command -v tree &> /dev/null; then
     tree --noreport -a "$TARGET"
   else
     find "$TARGET" -type f
