@@ -2,9 +2,6 @@
 
 set -euo pipefail
 
-# So that ** shows hidden files
-shopt -s globstar dotglob
-
 # Find folder where the script is located.
 # Works even if the executable is a symlink, and on macOS and Linux.
 BINPATH="$(perl -MCwd -le 'print Cwd::abs_path(shift)' "${BASH_SOURCE[0]}")"
@@ -80,19 +77,13 @@ install_scaffold() {
   local target_file="$1"
   shift
 
+  # Replace TARGET in the file names and file contents
+  # Replace VERSION in the file contents only
   for file in "$@"; do
-    if ! [ -f "$file" ]; then
-      # skip over directories
-      continue
-    fi
-
-    # Replace TARGET in the file names and file contents
-    # Replace VERSION in the file contents only
-
-    target_file="$target_dir/$(sed -e "s/TARGET/$TARGET/" <<< "$file")"
+    target_file="$target_dir/$(sed -e "s+TARGET+$TARGET+" <<< "$file")"
 
     mkdir -p "$(dirname "$target_file")"
-    sed -e "s/TARGET/$TARGET/; s/VERSION/$VERSION/" "$file" > "$target_file"
+    sed -e "s+TARGET+$TARGET+; s+VERSION+$VERSION+" "$file" > "$target_file"
   done
 
   if [ -f "$target_dir/symbol" ]; then
@@ -206,7 +197,6 @@ main() {
 
     # cd into $SCAFFOLD so that all filenames are relative
     pushd "$SCAFFOLD" &> /dev/null
-    # shellcheck disable=SC2035
     install_scaffold "$target_dir" symbol .symbol.mk
     popd &> /dev/null
 
@@ -221,8 +211,9 @@ main() {
 
     # cd into $SCAFFOLD so that all filenames are relative
     pushd "$SCAFFOLD" &> /dev/null
-    # shellcheck disable=SC2035
-    install_scaffold "$target_dir" **
+    # We explicitly want word splitting for the find
+    # shellcheck disable=SC2046
+    install_scaffold "$target_dir" $(find . -type f)
     popd &> /dev/null
 
     finish_nonempty_project

@@ -1,7 +1,6 @@
 #!/usr/bin/env bash
 
 set -euo pipefail
-# shellcheck source=./logging.sh
 source tests/logging.sh
 
 cd scaffold || exit 1

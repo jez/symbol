@@ -11,12 +11,13 @@ default:
 install:
 	mkdir -p $(bindir) $(sharedir)
 	install symbol-new $(bindir)
+	rm -rf scaffold/src/.cm
 	cp -rv scaffold $(sharedir)
 
+shell_files := $(shell find . -type f -name '*.sh')
 lint:
 	shellcheck --version
-	shopt -s globstar
-	shellcheck symbol-new scaffold/symbol ./**/*.sh
+	shellcheck symbol-new scaffold/symbol $(shell_files)
 
 test:
 	./run-tests.sh

@@ -147,10 +147,11 @@ TODO(jez) set up https://symbol.sh
 
 ## Testing
 
-TODO(jez) Implement test harness
+TODO(jez) Add tests for edge cases
 
 - run most commands with files missing
   - `symbol clean` with no `TARGET.cm` and no `TARGET.mlb`
+  - ensure hidden files show up with `symbol-new`
   - ...
 - grep for `error` logs and try to exercise them all
 

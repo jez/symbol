@@ -1,12 +1,14 @@
 #!/usr/bin/env bash
 
 set -euo pipefail
-shopt -s globstar
 
 source tests/logging.sh
 
 if [ "$#" -eq 0 ]; then
-  tests=(tests/**/*.sh)
+  tests=()
+  while IFS=$'\n' read -r line; do
+    tests+=("$line");
+  done < <(find tests -name '*.sh')
 else
   tests=("$@")
 fi
