@@ -16,4 +16,4 @@ install:
   - brew bundle
 
 script:
-  - shellcheck symbol-new symbol
+  - make lint
