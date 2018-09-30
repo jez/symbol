@@ -17,8 +17,12 @@ the history and context for why certain things are the way they are.
 
 ## Decided
 
+- The name "Symbol" was chosen because it sounds like "SML build"
+  - Also, it's short, easy to pronounce.
+  - Also, `brew search symbol` showed that it wasn't taken as a package name.
+
 - Should be both global and project-local
-  - global for `symbol new` to scaffold new projects
+  - global for `symbol-new` to scaffold new projects
   - project-local so new contributors don't need to install extra tools
 
 - Local `symbol` command written in shell, with a `symbol.mk` file.
@@ -50,6 +54,12 @@ the history and context for why certain things are the way they are.
     prefix to `/usr/local`
   - Why did we differ...? `¯\_(ツ)_/¯`
   - Can always pass `prefix=...` to install
+
+- Global `symbol-new` command is written in shell
+  - At first I tried implementing this in SML; it would have been nice to
+    dogfood the `symbol` build toolchain on the global command
+  - It was prohibitively hard to work with the filesystem in SML, so I quit
+  - In shell, it was trivial to throw together `cp -r` and `sed`
 
 ## Future Directions
 

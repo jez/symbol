@@ -40,6 +40,7 @@ MLBasis files. Symbol's key features are:
   that Symbol does not come with yet another file format to configure your
   project; just keep using `*.cm` files for SML/NJ and `*.mlb` files for MLton.
 
+TODO(jez) Screencast
 
 ## Install globally
 
@@ -142,13 +143,11 @@ TODO(jez) These tips are mostly fragments right now
 
 ## TODO
 
-- TODO(jez) set up CI
-- TODO(jez) Homebrew formula
-- TODO(jez) README, website
-- TODO(jez) CLI tests
-- TODO(jez) Update DECISIONS.md for symbol-new being in shell
+TODO(jez) set up https://symbol.sh
 
 ## Testing
+
+TODO(jez) Implement test harness
 
 Implement a test framework, then add tests for:
 
@@ -159,6 +158,9 @@ Implement a test framework, then add tests for:
   - the copies in the scaffold should have
 
 ## Developer Notes
+
+For historical context of implementation decisions, see
+[DECISIONS.md](DECISIONS.md).
 
 To bump the version:
 
