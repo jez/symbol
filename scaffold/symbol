@@ -110,8 +110,8 @@ EOF
 
 # ----- option parsing --------------------------------------------------------
 
-SUBCOMMAND="$1"
-shift
+SUBCOMMAND="${1:-help}"
+shift || true
 
 WITH=""
 MAKE_VARIABLES=()
@@ -221,6 +221,9 @@ main() {
       esac
       ;;
 
+    -h|--help|help)
+      print_help
+      ;;
     *)
       error "Unrecognized subcommand: '$SUBCOMMAND'"
       print_help

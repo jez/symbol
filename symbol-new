@@ -2,6 +2,9 @@
 
 set -euo pipefail
 
+# So that ** shows hidden files
+shopt -s globstar dotglob
+
 # Find folder where the script is located.
 # Works even if the executable is a symlink, and on macOS and Linux.
 BINPATH="$(perl -MCwd -le 'print Cwd::abs_path(shift)' "${BASH_SOURCE[0]}")"
@@ -45,6 +48,81 @@ warn() { in_color "$yellow" "[WARN] $*"; }
 
 # ----- helper functions ------------------------------------------------------
 
+ensure_scaffold() {
+  if ! [ -d "$SCAFFOLD" ]; then
+    error "Installation is corrupt. Missing required folder:"
+    error "    $SCAFFOLD"
+    exit 1
+  fi
+}
+
+make_target_dir() {
+  local force="$1"
+
+  if [ "$force" = "force" ]; then
+    mkdir -p "$TARGET"
+  else
+    mkdir "$TARGET"
+  fi
+
+  # Remember the target_dir for when we cd into $SCAFFOLD
+  local target_dir
+  pushd "$TARGET" &> /dev/null
+  target_dir="$(pwd)"
+  popd &> /dev/null
+
+  echo "$target_dir"
+}
+
+install_scaffold() {
+  local target_file="$1"
+  shift
+
+  for file in "$@"; do
+    if ! [ -f "$file" ]; then
+      # skip over directories
+      continue
+    fi
+
+    # Replace TARGET with in the file names and file contents
+
+    target_file="$target_dir/$(sed -e "s/TARGET/$TARGET/" <<< "$file")"
+
+    mkdir -p "$(dirname "$target_file")"
+    sed -e "s/TARGET/$TARGET/" "$file" > "$target_file"
+  done
+
+  if [ -f "$target_dir/symbol" ]; then
+    # The sed makes a new file which doesn't have permissions
+    chmod +x "$target_dir/symbol"
+  fi
+}
+
+finish_nonempty_project() {
+  # Get rid of any generated files we might have copied
+  pushd "$TARGET" &> /dev/null
+  symbol clean &> /dev/null
+  popd &> /dev/null
+
+  success "Created project:"
+  echo
+
+  if which tree &> /dev/null; then
+    tree --noreport -a "$TARGET"
+  else
+    find "$TARGET" -type f
+  fi
+}
+
+finish_empty_project() {
+  success "Added the 'symbol' command to your project."
+
+  if ! [ -f "$TARGET/$TARGET.cm" ] && ! [ -f "$TARGET/$TARGET.mlb" ]; then
+    warn "Did not detect a file named $TARGET.cm or $TARGET.mlb."
+    info "The symbol command depends on these files to build your project."
+    info "You will have to create at least one of these files before using symbol."
+  fi
+}
 
 print_help() {
   cat <<EOF
@@ -52,20 +130,30 @@ print_help() {
 symbol-new: Create a new symbol project
 
 Usage:
-  symbol-new <target>
+  symbol-new [options] <target>
+
+Arguments:
+  <target>    The name of the project to be created
 
 Options:
-  <target>   The name of your project.
+  --empty     Create the project without starter files (only the symbol script)
+              Also useful when adding symbol to an existing project.
+
 
 EOF
 }
 
-# ----- option parsing --------------------------------------------------------
+# ----- option parsing ---------------------------------------------------- {{{
 
 TARGET=
+EMPTY=
 
 while [[ $# -gt 0 ]]; do
   case $1 in
+    --empty)
+      EMPTY=1
+      shift
+      ;;
     -*)
       error "Unrecognized option: $1"
       print_help
@@ -94,57 +182,42 @@ elif grep '[^0-9A-Za-z_-]' <<< "$TARGET"; then
   exit 1
 fi
 
+# }}}
+
 # ----- main ------------------------------------------------------------------
 
 main() {
-  info "Making directory '$TARGET/'..."
-  # We intentionally error if this folder already exists
-  mkdir "$TARGET"
+  ensure_scaffold
 
-  if ! [ -d "$SCAFFOLD" ]; then
-    error "Installation is corrupt. Missing required folder:"
-    error "    $SCAFFOLD"
-    exit 1
-  fi
+  if [ -n "$EMPTY" ]; then
+    # An "empty" project has only the symbol script and associated makefile
 
-  # Remember the target_dir for when we cd into $SCAFFOLD
-  local target_dir
-  pushd "$TARGET" &> /dev/null
-  target_dir="$(pwd)"
-  popd &> /dev/null
+    info "Making directory '$TARGET/'..."
+    local target_dir
+    target_dir="$(make_target_dir "force")"
 
-  # So that ** shows hidden files
-  shopt -s globstar dotglob
+    # cd into $SCAFFOLD so that all filenames are relative
+    pushd "$SCAFFOLD" &> /dev/null
+    # shellcheck disable=SC2035
+    install_scaffold "$target_dir" symbol .symbol.mk
+    popd &> /dev/null
 
-  # cd into $SCAFFOLD so that all filenames are relative
-  pushd "$SCAFFOLD" &> /dev/null
-  for file in **; do
-    if ! [ -f "$file" ]; then
-      # skip over directories
-      continue
-    fi
-
-    target_file="$target_dir/$(sed -e "s/TARGET/$TARGET/" <<< "$file")"
-    mkdir -p "$(dirname "$target_file")"
-    sed -e "s/TARGET/$TARGET/" "$file" > "$target_file"
-  done
-  popd &> /dev/null
-
-  # The sed makes a new file which doesn't have permissions
-  chmod +x "$TARGET/symbol"
-
-  # Get rid of any generated files we might have copied
-  pushd "$TARGET" &> /dev/null
-  symbol clean
-  popd &> /dev/null
-
-  success "Created project:"
-  echo
-
-  if which tree &> /dev/null; then
-    tree -a "$TARGET"
+    finish_empty_project
   else
-    find "$TARGET" -type f
+    # A non-empty project has all the scaffold files, and must start from an
+    # empty directory.  make_target_dir quits if $TARGET/ already exists
+
+    info "Making directory '$TARGET/'..."
+    local target_dir
+    target_dir="$(make_target_dir "quit")"
+
+    # cd into $SCAFFOLD so that all filenames are relative
+    pushd "$SCAFFOLD" &> /dev/null
+    # shellcheck disable=SC2035
+    install_scaffold "$target_dir" **
+    popd &> /dev/null
+
+    finish_nonempty_project
   fi
 }
 
