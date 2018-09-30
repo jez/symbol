@@ -73,36 +73,36 @@ a different prefix, you can pass that to the `make` command. For example,
 make install prefix=/usr/local
 ```
 
-will instead install to `/usr/local/bin/symbol-new`
+will instead install to `/usr/local/bin/symbol-new`.
 
 
 ## Quickstart
 
 Create a new project with the global command:
 
-- `symbol-new <target>`
+```bash
+symbol-new <target>
+```
 
-  This creates a new folder called `<target>` and initializes it with build
-  files and a "Hello, world!" program to get your project started.
+This creates a new folder called `<target>` and initializes it with build
+files and a "Hello, world!" program to get your project started.
 
 Once the global `symbol-new` has been used to scaffold a new project, these
 commands are availble:
 
-- `symbol make`
+```bash
+# Build the project (by default uses SML/NJ)
+symbol make
 
-  Build the project (by default uses SML/NJ)
+# Build the project with MLton (takes longer, but makes faster executable)
+symbol make with=mlton
 
-- `symbol make with=mlton`
+# Build the project (by default uses MLton), then install to ~/.local/bin
+symbol install
 
-  Build the project with MLton, which will take longer but generate a faster
-  executable.
-
-- `symbol install`, `symbol install with=mlton`
-
-  Builds the project (optionally with MLton) and installs the resulting
-  executable into the folder `~/.local/bin`.
-
-  You might want to check that this folder is on your `$PATH` variable.
+# same as above, but installs to /usr/local/bin
+symbol install prefix=/usr/local
+```
 
 For complete usage information, be sure to check the help output of both the
 global and local command:
