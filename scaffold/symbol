@@ -95,7 +95,7 @@ print_help() {
 
 symbol: A build tool for Standard ML
 
-Project commands:
+Usage:
   symbol make [make variables]
   symbol install [make variables]
   symbol clean

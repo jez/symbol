@@ -44,7 +44,7 @@ version:
 
 .PHONY: clean
 clean:
-	rm -rf .symbol-work .cm *.du *.ud
+	rm -rf .symbol-work .cm src/.cm *.du *.ud
 
 
 # ----- Internal targets ------------------------------------------------------
