@@ -149,11 +149,71 @@ TODO(jez) set up https://symbol.sh
 
 TODO(jez) Add tests for edge cases
 
-- run most commands with files missing
-  - `symbol clean` with no `TARGET.cm` and no `TARGET.mlb`
-  - ensure hidden files show up with `symbol-new`
-  - ...
-- grep for `error` logs and try to exercise them all
+- `symbol version`
+  - wc -l == 1
+
+- `symbol version`
+  - no .symbol-work folder
+
+- `symbol`, `symbol -h`, `symbol --help`, `symbol help`
+
+- errors
+  - `symbol --foo`
+    - bad subcommand
+  - `symbol make --foo`
+    - bad option
+  - `symbol make foo`
+    - bad positional arg
+  - delete `TARGET.cm` and `TARGET.mlb`
+    - could not infer `with=`
+  - `symbol make with=foo`
+
+
+- `with=smlnj`
+  - generated executable is text file and references heap image
+
+- `with=mlton`
+  - generated executable is data file
+
+- `with=smlnj` → `with=mlton` → `with=smlnj`
+  - is SML/NJ executable, not MLton
+
+- `[smlnj, mlton].each do`
+  - generated executable has correct permissions
+
+  - with=smlnj and with=mlton show error output if doesn't typecheck
+
+  - `symbol make`, `symbol make`
+    - only one line output for second command (just path of built executable)
+
+  - `symbol make` populates `.symbol-work/debug.log` for each run
+    - if there are errors, the error output is here too
+
+  - `symbol install prefix=.`
+    - either
+      - bin/TARGET
+      - lib/TARGET/TARGET.suffix
+    - or
+      - bin/TARGET
+    - and then runs (even if you clean and delete src/ folder)
+
+
+if CI:
+  - `symbol install`
+    - installs to `$HOME/.local/bin/TARGET`
+    - runs (even if you clean and delete src/ folder)
+
+- `symbol-new`
+  - ensure hidden files show up
+
+- `symbol-new --empty`
+  - ensure count of files is only two
+
+- `symbol-new`, `symbol-new --empty`
+  - empty still works if the directory exists
+
+
+- TODO(jez) grep for `error` logs and try to exercise them all
 
 ## Developer Notes
 
