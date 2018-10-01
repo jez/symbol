@@ -121,7 +121,7 @@ finish_empty_project() {
 print_help() {
   cat <<EOF
 
-symbol-new: Create a new symbol project
+symbol-new: Scaffold a new Standard ML project using Symbol
 
 Usage:
   symbol-new [options] <target>
