@@ -149,6 +149,14 @@ TODO(jez) set up https://symbol.sh
 
 TODO(jez) Add tests for edge cases
 
+Between each test:
+
+```
+git reset
+git checkout .
+git clean -dfx
+```
+
 - `symbol version`
   - wc -l == 1
 
