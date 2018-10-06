@@ -151,7 +151,7 @@ TODO(jez) Add tests for edge cases
 
 Between each test:
 
-```
+```bash
 git reset
 git checkout .
 git clean -dfx
