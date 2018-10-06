@@ -153,6 +153,10 @@ while [[ $# -gt 0 ]]; do
       echo "$VERSION"
       exit
       ;;
+    -h|--help)
+      print_help
+      exit
+      ;;
     -*)
       error "Unrecognized option: $1"
       print_help
