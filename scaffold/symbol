@@ -117,7 +117,7 @@ SUBCOMMAND="${1:-help}"
 shift || true
 
 WITH=""
-MAKE_VARIABLES=()
+MAKE_VARS=()
 ARGV=()
 
 while [[ $# -gt 0 ]]; do
@@ -128,7 +128,7 @@ while [[ $# -gt 0 ]]; do
       shift
       ;;
     *=*)
-      MAKE_VARIABLES+=("$1")
+      MAKE_VARS+=("$1")
       shift
       ;;
     -h|--help)
@@ -177,14 +177,15 @@ main() {
       #   <stderr>       ->        symbol.log
 
       # Check to see if "make: Nothing to be done for `make'" would be printed
+      # https://stackoverflow.com/questions/7577052
       if make -f .symbol.mk --question "$SUBCOMMAND" "with=$WITH" \
-          "${MAKE_VARIABLES[@]}" 3>&1 > .symbol-work/debug.log 2>&1; then
+          ${MAKE_VARS[@]+"${MAKE_VARS[@]}"} 3>&1 > .symbol-work/debug.log 2>&1; then
         return
       fi
 
       # Build succeeded. The make target should have printed output.
       if make -f .symbol.mk "$SUBCOMMAND" "with=$WITH" \
-          "${MAKE_VARIABLES[@]}" 3>&1 > .symbol-work/debug.log 2>&1; then
+          ${MAKE_VARS[@]+"${MAKE_VARS[@]}"} 3>&1 > .symbol-work/debug.log 2>&1; then
         return
       fi
 

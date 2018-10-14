@@ -87,12 +87,14 @@ for test in "${tests[@]}"; do
 done
 
 echo
-echo
 
-echo "───── Passing tests ────────────────────────────────────────────────────"
-for passing_test in "${passing_tests[@]}"; do
-  success "$passing_test"
-done
+if [ "${#passing_tests[@]}" -ne 0 ]; then
+  echo
+  echo "───── Passing tests ────────────────────────────────────────────────────"
+  for passing_test in "${passing_tests[@]}"; do
+    success "$passing_test"
+  done
+fi
 
 if [ "${#skipped_tests[@]}" -ne 0 ]; then
   echo
