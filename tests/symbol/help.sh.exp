@@ -2,10 +2,10 @@
 symbol: A build tool for Standard ML
 
 Usage:
-  symbol make [make variables]
-  symbol install [make variables]
-  symbol clean
-  symbol version
+  ./symbol make [make variables]
+  ./symbol install [make variables]
+  ./symbol clean
+  ./symbol version
 
 Make variables:
   with=(smlnj|mlton)   Which toolchain to use to build the project.
@@ -18,10 +18,10 @@ Make variables:
 symbol: A build tool for Standard ML
 
 Usage:
-  symbol make [make variables]
-  symbol install [make variables]
-  symbol clean
-  symbol version
+  ./symbol make [make variables]
+  ./symbol install [make variables]
+  ./symbol clean
+  ./symbol version
 
 Make variables:
   with=(smlnj|mlton)   Which toolchain to use to build the project.
@@ -34,10 +34,10 @@ Make variables:
 symbol: A build tool for Standard ML
 
 Usage:
-  symbol make [make variables]
-  symbol install [make variables]
-  symbol clean
-  symbol version
+  ./symbol make [make variables]
+  ./symbol install [make variables]
+  ./symbol clean
+  ./symbol version
 
 Make variables:
   with=(smlnj|mlton)   Which toolchain to use to build the project.
@@ -50,10 +50,10 @@ Make variables:
 symbol: A build tool for Standard ML
 
 Usage:
-  symbol make [make variables]
-  symbol install [make variables]
-  symbol clean
-  symbol version
+  ./symbol make [make variables]
+  ./symbol install [make variables]
+  ./symbol clean
+  ./symbol version
 
 Make variables:
   with=(smlnj|mlton)   Which toolchain to use to build the project.

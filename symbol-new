@@ -56,6 +56,7 @@ ensure_scaffold() {
 }
 
 make_target_dir() {
+  info "Making directory '$TARGET/'..."
   local force="$1"
 
   if [ "$force" = "force" ]; then
@@ -63,7 +64,9 @@ make_target_dir() {
   else
     mkdir "$TARGET"
   fi
+}
 
+get_target_dir() {
   # Remember the target_dir for when we cd into $SCAFFOLD
   local target_dir
   pushd "$TARGET" &> /dev/null
@@ -95,7 +98,7 @@ install_scaffold() {
 finish_nonempty_project() {
   # Get rid of any generated files we might have copied
   pushd "$TARGET" &> /dev/null
-  symbol clean &> /dev/null
+  ./symbol clean &> /dev/null
   popd &> /dev/null
 
   success "Created project:"
@@ -195,9 +198,9 @@ main() {
   if [ -n "$EMPTY" ]; then
     # An "empty" project has only the symbol script and associated makefile
 
-    info "Making directory '$TARGET/'..."
+    make_target_dir "force"
     local target_dir
-    target_dir="$(make_target_dir "force")"
+    target_dir="$(get_target_dir)"
 
     # cd into $SCAFFOLD so that all filenames are relative
     pushd "$SCAFFOLD" &> /dev/null
@@ -209,9 +212,9 @@ main() {
     # A non-empty project has all the scaffold files, and must start from an
     # empty directory.  make_target_dir quits if $TARGET/ already exists
 
-    info "Making directory '$TARGET/'..."
+    make_target_dir "quit"
     local target_dir
-    target_dir="$(make_target_dir "quit")"
+    target_dir="$(get_target_dir)"
 
     # cd into $SCAFFOLD so that all filenames are relative
     pushd "$SCAFFOLD" &> /dev/null

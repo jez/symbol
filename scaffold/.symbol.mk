@@ -6,7 +6,7 @@
 #
 #   For usage information, run
 #
-#       symbol help
+#       ./symbol help
 #
 #   or visit https://symbol.sh
 #
