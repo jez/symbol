@@ -5,7 +5,7 @@ source tests/logging.sh
 
 cd scaffold
 
-symbol make with=mlton
+./symbol make with=mlton
 
 target=.symbol-work/bin/TARGET
 

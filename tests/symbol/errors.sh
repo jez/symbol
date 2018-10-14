@@ -5,24 +5,24 @@ source tests/logging.sh
 
 cd scaffold
 
-if symbol --foo; then
+if ./symbol --foo; then
   fatal "Expected non-zero return"
 fi
 
 echo --------------------------------------------------------------------------
 
-if symbol make --foo; then
+if ./symbol make --foo; then
   fatal "Expected non-zero return"
 fi
 
 echo --------------------------------------------------------------------------
 
-if symbol make foo; then
+if ./symbol make foo; then
   fatal "Expected non-zero return"
 fi
 
 echo --------------------------------------------------------------------------
 
-if symbol make with=foo; then
+if ./symbol make with=foo; then
   fatal "Expected non-zero return"
 fi

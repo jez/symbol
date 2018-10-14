@@ -5,7 +5,7 @@ source tests/logging.sh
 
 cd scaffold
 
-symbol make with=smlnj
+./symbol make with=smlnj
 
 target=.symbol-work/bin/TARGET
 
