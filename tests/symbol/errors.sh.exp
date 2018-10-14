@@ -12,7 +12,7 @@ Make variables:
   with=(smlnj|mlton)   Which toolchain to use to build the project.
                        [default: smlnj, unless no *.cm file]
   prefix=<prefix>      Where to install the resulting binaries to.
-                       [default: /Users/jez/.local]
+                       [default: $HOME/.local]
 
 --------------------------------------------------------------------------
 
@@ -30,7 +30,7 @@ Make variables:
   with=(smlnj|mlton)   Which toolchain to use to build the project.
                        [default: smlnj, unless no *.cm file]
   prefix=<prefix>      Where to install the resulting binaries to.
-                       [default: /Users/jez/.local]
+                       [default: $HOME/.local]
 
 --------------------------------------------------------------------------
 [ERR!] This command does not accept positional arguments.
@@ -51,5 +51,5 @@ Make variables:
   with=(smlnj|mlton)   Which toolchain to use to build the project.
                        [default: smlnj, unless no *.cm file]
   prefix=<prefix>      Where to install the resulting binaries to.
-                       [default: /Users/jez/.local]
+                       [default: $HOME/.local]
 

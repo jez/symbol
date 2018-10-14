@@ -106,7 +106,7 @@ Make variables:
   with=(smlnj|mlton)   Which toolchain to use to build the project.
                        [default: smlnj, unless no *.cm file]
   prefix=<prefix>      Where to install the resulting binaries to.
-                       [default: $HOME/.local]
+                       [default: \$HOME/.local]
 
 EOF
 }
