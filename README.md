@@ -225,8 +225,44 @@ if CI:
 
 ## Developer Notes
 
-For historical context of implementation decisions, see
-[DECISIONS.md](DECISIONS.md).
+To learn more about historical context and implementation decisions:
+
+- Read [DECISIONS.md](DECISIONS.md)
+
+To set up your dev environment (macOS):
+
+```
+brew bundle
+```
+
+To run the lint checks:
+
+```
+make lint
+```
+
+To run the tests:
+
+```
+make test
+```
+
+To re-record the snapshot tests:
+
+```
+make test update=1
+```
+
+To make a new test:
+
+- Add a `.sh` file anywhere in `tests/`.
+- Make it executable.
+
+To make a new snapshot test:
+
+- Make a new test, say `tests/foo.sh`
+- Make an empty file like `tests/foo.sh.exp`
+- Run `make test update=1`
 
 To bump the version:
 
