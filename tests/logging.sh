@@ -6,7 +6,7 @@ yellow=$'\x1b[0;33m'
 cyan=$'\x1b[0;36m'
 cnone=$'\x1b[0m'
 
-if [ -t 1 ]; then
+if [ -t 2 ]; then
   USE_COLOR=1
 else
   USE_COLOR=0
@@ -24,8 +24,8 @@ in_color() {
   fi
 }
 
-success() { echo "$(in_color "$green" "[ OK ]") $*"; }
-error() {   echo "$(in_color "$red"   "[ERR!]") $*"; }
-info() {    echo "$(in_color "$cyan"  "[INFO]") $*"; }
+success() { echo "$(in_color "$green" "[ OK ]") $*" >&2; }
+error()   { echo "$(in_color "$red"   "[ERR!]") $*" >&2; }
+info()    { echo "$(in_color "$cyan"  "[INFO]") $*" >&2; }
 # Color entire warning to get users' attention (because we won't stop).
-warn() { in_color "$yellow" "[WARN] $*"; }
+warn()    { in_color "$yellow" "[WARN] $*" >&2; }
