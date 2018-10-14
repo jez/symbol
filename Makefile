@@ -19,8 +19,11 @@ lint:
 	shellcheck --version
 	shellcheck symbol-new scaffold/symbol $(shell_files)
 
+
+update :=
+
 test:
-	./run-tests.sh
+	./run-tests.sh $(if $(update),--update,)
 
 clean:
 	rm -rf bin share
