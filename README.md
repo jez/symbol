@@ -155,17 +155,16 @@ TODO(jez) Add tests for edge cases
 - delete `TARGET.cm` and `TARGET.mlb`
   - could not infer `with=`
 
-- `with=smlnj` → `with=mlton` → `with=smlnj`
-  - is SML/NJ executable, not MLton
+- with=smlnj and with=mlton show error output if doesn't typecheck
+  - also have errors in the debug.log
+
+- still runs (even if you clean and delete foo folder)
 
 - `[smlnj, mlton].each do`
-  - with=smlnj and with=mlton show error output if doesn't typecheck
-
   - `symbol make`, `symbol make`
     - only one line output for second command (just path of built executable)
 
   - `symbol make` populates `.symbol-work/debug.log` for each run
-    - if there are errors, the error output is here too
 
   - `symbol install prefix=.`
     - either
@@ -173,7 +172,6 @@ TODO(jez) Add tests for edge cases
       - lib/TARGET/TARGET.suffix
     - or
       - bin/TARGET
-    - and then runs (even if you clean and delete src/ folder)
 
 
 if CI:
