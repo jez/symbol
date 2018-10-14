@@ -1,0 +1,16 @@
+[ERR!] Missing required argument: <target>
+
+symbol-new: Scaffold a new Standard ML project using Symbol
+
+Usage:
+  symbol-new [options] <target>
+  symbol-new --version
+
+Arguments:
+  <target>    The name of the project to be created
+
+Options:
+  --empty     Create the project without starter files (only the symbol script)
+              Also useful when adding symbol to an existing project.
+
+
