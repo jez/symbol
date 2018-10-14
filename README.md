@@ -149,46 +149,14 @@ TODO(jez) set up https://symbol.sh
 
 TODO(jez) Add tests for edge cases
 
-Between each test:
 
-```bash
-git reset
-git checkout .
-git clean -dfx
-```
-
-- `symbol version`
-  - wc -l == 1
-
-- `symbol version`
-  - no .symbol-work folder
-
-- `symbol`, `symbol -h`, `symbol --help`, `symbol help`
-
-- errors
-  - `symbol --foo`
-    - bad subcommand
-  - `symbol make --foo`
-    - bad option
-  - `symbol make foo`
-    - bad positional arg
-  - delete `TARGET.cm` and `TARGET.mlb`
-    - could not infer `with=`
-  - `symbol make with=foo`
-
-
-- `with=smlnj`
-  - generated executable is text file and references heap image
-
-- `with=mlton`
-  - generated executable is data file
+- delete `TARGET.cm` and `TARGET.mlb`
+  - could not infer `with=`
 
 - `with=smlnj` → `with=mlton` → `with=smlnj`
   - is SML/NJ executable, not MLton
 
 - `[smlnj, mlton].each do`
-  - generated executable has correct permissions
-
   - with=smlnj and with=mlton show error output if doesn't typecheck
 
   - `symbol make`, `symbol make`
