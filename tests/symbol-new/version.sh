@@ -13,6 +13,5 @@ bin/symbol-new foo &> /dev/null
 foo/symbol --version
 
 if [ -d foo/.symbol-work ]; then
-  error "Asking for --version created .symbol-work folder"
-  exit 1
+  fatal "Asking for --version created .symbol-work folder"
 fi

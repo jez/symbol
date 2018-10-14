@@ -6,6 +6,5 @@ source tests/logging.sh
 make install prefix=. &> /dev/null
 
 if bin/symbol-new; then
-  error "├─ symbol-new did not exit with non-zero status"
-  exit 1
+  fatal "symbol-new did not exit with non-zero status"
 fi
