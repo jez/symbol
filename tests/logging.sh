@@ -29,3 +29,8 @@ error()   { echo "$(in_color "$red"   "[ERR!]") $*" >&2; }
 info()    { echo "$(in_color "$cyan"  "[INFO]") $*" >&2; }
 # Color entire warning to get users' attention (because we won't stop).
 warn()    { in_color "$yellow" "[WARN] $*" >&2; }
+
+fatal() {
+  error "$@"
+  exit 1
+}
