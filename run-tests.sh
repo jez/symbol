@@ -4,6 +4,10 @@ set -euo pipefail
 
 source tests/logging.sh
 
+# Removes files ignored by Git.
+# Changes to tracked / unignored files will carry over from test to test!
+git clean -dfX &> /dev/null
+
 ARGV=()
 UPDATE=
 VERBOSE=
