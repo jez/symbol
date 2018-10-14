@@ -1,0 +1,55 @@
+[ERR!] Unrecognized subcommand: '--foo'
+
+symbol: A build tool for Standard ML
+
+Usage:
+  symbol make [make variables]
+  symbol install [make variables]
+  symbol clean
+  symbol version
+
+Make variables:
+  with=(smlnj|mlton)   Which toolchain to use to build the project.
+                       [default: smlnj, unless no *.cm file]
+  prefix=<prefix>      Where to install the resulting binaries to.
+                       [default: /Users/jez/.local]
+
+--------------------------------------------------------------------------
+
+[ERR!] Unrecognized option: '--foo'
+
+symbol: A build tool for Standard ML
+
+Usage:
+  symbol make [make variables]
+  symbol install [make variables]
+  symbol clean
+  symbol version
+
+Make variables:
+  with=(smlnj|mlton)   Which toolchain to use to build the project.
+                       [default: smlnj, unless no *.cm file]
+  prefix=<prefix>      Where to install the resulting binaries to.
+                       [default: /Users/jez/.local]
+
+--------------------------------------------------------------------------
+[ERR!] This command does not accept positional arguments.
+[INFO] subcommand: make
+[INFO] argv: foo
+--------------------------------------------------------------------------
+[ERR!] Cannot build using 'with=foo'. Valid values: smlnj, mlton
+
+symbol: A build tool for Standard ML
+
+Usage:
+  symbol make [make variables]
+  symbol install [make variables]
+  symbol clean
+  symbol version
+
+Make variables:
+  with=(smlnj|mlton)   Which toolchain to use to build the project.
+                       [default: smlnj, unless no *.cm file]
+  prefix=<prefix>      Where to install the resulting binaries to.
+                       [default: /Users/jez/.local]
+
