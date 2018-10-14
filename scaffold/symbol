@@ -72,6 +72,7 @@ tidy_symbol_work() {
 ensure_no_argv() {
   if [ "${#ARGV[@]}" -ne 0 ]; then
     error "This command does not accept positional arguments."
+    info "subcommand: $SUBCOMMAND"
     info  "argv: ${ARGV[*]}"
     exit 1
   fi
