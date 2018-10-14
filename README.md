@@ -1,5 +1,7 @@
 # Symbol
 
+[![Build Status](https://travis-ci.org/jez/symbol.svg?branch=master)](https://travis-ci.org/jez/symbol)
+
 > A build tool for Standard ML
 
 🚧 This project is unfinished and ongoing. Pardon our ~~dust~~ TODOs. 🚧
