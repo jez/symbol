@@ -6,10 +6,15 @@ source tests/logging.sh
 
 ARGV=()
 UPDATE=
+VERBOSE=
 while [[ $# -gt 0 ]]; do
   case $1 in
     --update)
       UPDATE=1
+      shift
+      ;;
+    --verbose)
+      VERBOSE=1
       shift
       ;;
     *)
@@ -25,7 +30,7 @@ if [ "${#ARGV[@]}" -eq 0 ]; then
     tests+=("$line");
   done < <(find tests -name '*.sh')
 else
-  tests=("$@")
+  tests=("${ARGV[@]}")
 fi
 
 failing_tests=()
@@ -49,6 +54,8 @@ for test in "${tests[@]}"; do
       cat "$actual"
       failing_tests+=("$test")
       continue
+    elif [ -n "$VERBOSE" ]; then
+      cat "$actual"
     fi
 
     expected="$test.exp"
@@ -109,7 +116,7 @@ if [ "${#failing_tests[@]}" -ne 0 ]; then
   echo
   echo "There were failing tests. To re-run all failing tests:"
   echo
-  echo "    ./run-tests.sh ${failing_tests[*]}"
+  echo "    ./run-tests.sh --verbose ${failing_tests[*]}"
   echo
 
   exit 1
