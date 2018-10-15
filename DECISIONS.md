@@ -5,16 +5,6 @@ implementing Symbol. It's intended as a reference for contributors to understand
 the history and context for why certain things are the way they are.
 
 
-## Needs decision
-
-- What language should the global command be written in?
-  - option: SML
-    - Can dogfood the tool
-    - Will show up as being written in "Standard ML" in GitHub's linguist chart
-  - option: shell
-    - Is probably easier to write
-    - Does not require publishing pre-built binaries
-
 ## Decided
 
 - The name "Symbol" was chosen because it sounds like "SML build"
@@ -60,6 +50,12 @@ the history and context for why certain things are the way they are.
     dogfood the `symbol` build toolchain on the global command
   - It was prohibitively hard to work with the filesystem in SML, so I quit
   - In shell, it was trivial to throw together `cp -r` and `sed`
+
+- Both commands should have solid lint and test coverage.
+  - Bash doesn't have any type safety, so we need to make up for it with strong
+    linting and testing.
+  - Most of our features are file system operations, which can have lots of edge
+    cases.
 
 ## Future Directions
 
