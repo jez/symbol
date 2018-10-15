@@ -38,4 +38,4 @@ Error: /Users/jez/Dropbox/Documents/Programming/cli/symbol/foo/src/main.sml 2.0.
 Error: /Users/jez/Dropbox/Documents/Programming/cli/symbol/foo/src/call-main.sml 2.26.
   Undefined structure Main.
 compilation aborted: parseAndElaborate reported errors
-make: *** [.symbol-work/mlton/foo] Error 1
+make[1]: *** [.symbol-work/mlton/foo] Error 1
