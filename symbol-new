@@ -9,7 +9,7 @@ BINDIR="$(dirname "$BINPATH")"
 PREFIX="$(dirname "$BINDIR")"
 SCAFFOLD="$PREFIX/share/symbol/scaffold"
 
-VERSION="v0.10.0"
+VERSION="v0.10.1"
 
 # ----- logging & colors -------------------------------------------------- {{{
 
