@@ -147,25 +147,6 @@ TODO(jez) These tips are mostly fragments right now
 
 TODO(jez) set up https://symbol.sh
 
-## Testing
-
-TODO(jez) Add tests for edge cases
-
-- delete `TARGET.cm` and `TARGET.mlb`
-  - could not infer `with=`
-
-- with=smlnj and with=mlton show error output if doesn't typecheck
-  - also have errors in the debug.log
-
-- `[smlnj, mlton].each do`
-  - `symbol install prefix=.`
-    - either
-      - bin/TARGET
-      - lib/TARGET/TARGET.suffix
-    - or
-      - bin/TARGET
-    - still runs (even if you clean and delete foo folder)
-
 
 ## Contributing
 
