@@ -5,6 +5,8 @@ source tests/logging.sh
 
 cd scaffold
 
+echo --- first build ----------------------------------------------------------
+
 ./symbol make with=smlnj
 
 target=.symbol-work/bin/TARGET
@@ -21,6 +23,12 @@ if ! grep -q '^exec sml ' "$target"; then
   fatal "TARGET does not exec SML/NJ"
 fi
 
+echo --- scaffold output ------------------------------------------------------
+
 if ! "$target"; then
   fatal "Running TARGET returned non-zero status"
 fi
+
+echo --- second build ---------------------------------------------------------
+
+./symbol make with=smlnj

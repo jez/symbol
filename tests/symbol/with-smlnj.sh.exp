@@ -1,5 +1,9 @@
+--- first build ----------------------------------------------------------
 [INFO] Analyzing CM dependencies...
 [INFO] Building heap image with SML/NJ...
 [INFO] Building 'TARGET' into '.symbol-work/bin'...
 [ OK ] .symbol-work/bin/TARGET
+--- scaffold output ------------------------------------------------------
 Hello, world!
+--- second build ---------------------------------------------------------
+[ OK ] .symbol-work/bin/TARGET

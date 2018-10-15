@@ -161,9 +161,6 @@ TODO(jez) Add tests for edge cases
 - still runs (even if you clean and delete foo folder)
 
 - `[smlnj, mlton].each do`
-  - `symbol make`, `symbol make`
-    - only one line output for second command (just path of built executable)
-
   - `symbol make` populates `.symbol-work/debug.log` for each run
 
   - `symbol install prefix=.`
