@@ -57,6 +57,8 @@ failing_tests=()
 skipped_tests=()
 passing_tests=()
 for test in "${tests[@]}"; do
+  git clean -dfX &> /dev/null
+
   if ! [ -x "$test" ]; then
     if ! [ "$test" = "tests/logging.sh" ]; then
       skipped_tests+=("$test")
@@ -93,9 +95,6 @@ for test in "${tests[@]}"; do
       fi
     fi
 
-    # Removes files ignored by Git.
-    git clean -dfX &> /dev/null
-
     if [ -n "$STARTED_CLEAN" ] && ! is_clean; then
       error "└─ test did not leave working directory clean."
       failing_tests+=("$test")
@@ -106,6 +105,8 @@ for test in "${tests[@]}"; do
     passing_tests+=("$test")
   fi
 done
+
+git clean -dfX &> /dev/null
 
 echo
 
