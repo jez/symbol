@@ -7,3 +7,8 @@
 Hello, world!
 --- second build ---------------------------------------------------------
 [ OK ] .symbol-work/bin/TARGET
+--- install --------------------------------------------------------------
+[INFO] Building 'TARGET' into 'bin'...
+[ OK ] bin/TARGET
+--- install output -------------------------------------------------------
+Hello, world!

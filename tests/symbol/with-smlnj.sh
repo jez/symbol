@@ -3,13 +3,13 @@
 set -euo pipefail
 source tests/logging.sh
 
+target=.symbol-work/bin/TARGET
+
 cd scaffold
 
 echo --- first build ----------------------------------------------------------
 
 ./symbol make with=smlnj
-
-target=.symbol-work/bin/TARGET
 
 if ! [ -f "$target" ]; then
   fatal "Didn't build successfully."
@@ -23,6 +23,10 @@ if ! grep -q '^exec sml ' "$target"; then
   fatal "TARGET does not exec SML/NJ"
 fi
 
+if ! [ -f .symbol-work/debug.log ]; then
+  fatal "debug.log is missing"
+fi
+
 echo --- scaffold output ------------------------------------------------------
 
 if ! "$target"; then
@@ -32,3 +36,11 @@ fi
 echo --- second build ---------------------------------------------------------
 
 ./symbol make with=smlnj
+
+echo --- install --------------------------------------------------------------
+
+./symbol install with=smlnj prefix=.
+
+echo --- install output -------------------------------------------------------
+
+bin/TARGET

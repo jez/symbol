@@ -15,5 +15,6 @@ tags
 
 # some generated folders that I use for testing a lot
 bin
+lib
 share
 foo

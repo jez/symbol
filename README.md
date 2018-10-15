@@ -158,11 +158,8 @@ TODO(jez) Add tests for edge cases
 - with=smlnj and with=mlton show error output if doesn't typecheck
   - also have errors in the debug.log
 
-- still runs (even if you clean and delete foo folder)
-
 - `[smlnj, mlton].each do`
-  - `symbol make` populates `.symbol-work/debug.log` for each run
-
+  - still runs (even if you clean and delete foo folder)
   - `symbol install prefix=.`
     - either
       - bin/TARGET
