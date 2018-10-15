@@ -8,6 +8,22 @@ source tests/logging.sh
 # Changes to tracked / unignored files will carry over from test to test!
 git clean -dfX &> /dev/null
 
+no_uncommitted() {
+  git diff --quiet HEAD 2> /dev/null
+}
+no_untracked() {
+  return "$(git ls-files -o -d --exclude-standard | head -n 1 | wc -l)"
+}
+is_clean() {
+  no_uncommitted && no_untracked
+}
+
+if is_clean; then
+  STARTED_CLEAN=1
+else
+  STARTED_CLEAN=
+fi
+
 ARGV=()
 UPDATE=
 VERBOSE=
@@ -77,12 +93,17 @@ for test in "${tests[@]}"; do
       fi
     fi
 
+    # Removes files ignored by Git.
+    git clean -dfX &> /dev/null
+
+    if [ -n "$STARTED_CLEAN" ] && ! is_clean; then
+      error "└─ test did not leave working directory clean."
+      failing_tests+=("$test")
+      continue
+    fi
+
     success "└─ passed."
     passing_tests+=("$test")
-
-    # Removes files ignored by Git.
-    # Changes to tracked / unignored files will carry over from test to test!
-    git clean -dfX &> /dev/null
   fi
 done
 

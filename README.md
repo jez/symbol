@@ -167,11 +167,7 @@ TODO(jez) Add tests for edge cases
     - still runs (even if you clean and delete foo folder)
 
 
-- Show time for each test
-- If started clean (CI) should end clean
-
-
-## Developer Notes
+## Contributing
 
 To learn more about historical context and implementation decisions:
 
