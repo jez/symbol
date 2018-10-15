@@ -151,7 +151,6 @@ TODO(jez) set up https://symbol.sh
 
 TODO(jez) Add tests for edge cases
 
-
 - delete `TARGET.cm` and `TARGET.mlb`
   - could not infer `with=`
 
@@ -159,31 +158,18 @@ TODO(jez) Add tests for edge cases
   - also have errors in the debug.log
 
 - `[smlnj, mlton].each do`
-  - still runs (even if you clean and delete foo folder)
   - `symbol install prefix=.`
     - either
       - bin/TARGET
       - lib/TARGET/TARGET.suffix
     - or
       - bin/TARGET
+    - still runs (even if you clean and delete foo folder)
 
 
-if CI:
-  - `symbol install`
-    - installs to `$HOME/.local/bin/TARGET`
-    - runs (even if you clean and delete src/ folder)
+- Show time for each test
+- If started clean (CI) should end clean
 
-- `symbol-new`
-  - ensure hidden files show up
-
-- `symbol-new --empty`
-  - ensure count of files is only two
-
-- `symbol-new`, `symbol-new --empty`
-  - empty still works if the directory exists
-
-
-- TODO(jez) grep for `error` logs and try to exercise them all
 
 ## Developer Notes
 
