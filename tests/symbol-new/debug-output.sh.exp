@@ -9,34 +9,7 @@ Compilation failed.
 [ERR!] Building with 'smlnj' failed. See output above.
 [INFO] (Debug output is in .symbol-work/debug.log)
 --- debug.log ------------------------------------------------------------
-./symbol log info "Analyzing CM dependencies..." >&3
-mkdir -p ".symbol-work/smlnj"
-touch ".symbol-work/smlnj/foo.cm.mk"
-ml-makedepend -n -f ".symbol-work/smlnj/foo.cm.mk" "foo.cm" '.symbol-work/smlnj/foo.x86-darwin' || rm -f ".symbol-work/smlnj/foo.cm.mk"
-Standard ML of New Jersey v110.82 [built: Tue Jan  9 20:54:24 2018]
-[opening 64459-mlscript.sml]
-[autoloading]
-[library $smlnj/cm/cm.cm is stable]
-[library $smlnj/internal/cm-sig-lib.cm is stable]
-[library $/pgraph.cm is stable]
-[library $smlnj/internal/srcpath-lib.cm is stable]
-[library $SMLNJ-BASIS/basis.cm is stable]
-[library $SMLNJ-BASIS/(basis.cm):basis-common.cm is stable]
-[autoloading done]
-[scanning foo.cm]
-foo.cm:5.3-5.15 Error: no module exports from (foo.cm):src/main.sml
-/usr/local/bin/ml-makedepend: CM dependency analysis failed
-./symbol log info "Building heap image with SML/NJ..." >&3
-mkdir -p ".symbol-work/smlnj"
-ml-build \
-		"foo.cm" \
-		Main.main \
-		".symbol-work/smlnj/foo" | tee .symbol-work/error.log
-Standard ML of New Jersey v110.82 [built: Tue Jan  9 20:54:24 2018]
-[scanning foo.cm]
-foo.cm:5.3-5.15 Error: no module exports from (foo.cm):src/main.sml
-Compilation failed.
-make: *** [.symbol-work/smlnj/foo.x86-darwin] Error 1
+...omitted...
 --- with=mlton -----------------------------------------------------------
 [INFO] Analyzing MLB dependencies...
 [INFO] Building binary with MLton...

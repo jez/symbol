@@ -14,7 +14,10 @@ echo --- with=smlnj -----------------------------------------------------------
 foo/symbol make with=smlnj
 
 echo --- debug.log ------------------------------------------------------------
-cat foo/.symbol-work/debug.log
+# We can't print this because ml-makedepend output is not stable across re-runs.
+# Each time you run it, it will show different things even for identical inputs.
+# cat foo/.symbol-work/debug.log
+echo ...omitted...
 
 echo --- with=mlton -----------------------------------------------------------
 foo/symbol make with=mlton
