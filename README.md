@@ -25,10 +25,10 @@ MLBasis files. Symbol's key features are:
 
 - **Built on `make`**
 
-  As much as possible, Symbol uses `make` to cache previous build steps. All
-  intermediate outputs are stored into a `.symbol-work` folder in your current
-  directory, and it's always safe to delete this folder. Running `symbol make` a
-  second time should usually be instant.
+  As much as possible, Symbol uses `make` to cache previous build steps. Running
+  `symbol make` a second time should usually be instant. All intermediate
+  outputs are stored into a `.symbol-work` folder in your current directory, and
+  it's always safe to delete this folder.
 
 - **Scaffold new projects**
 
