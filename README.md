@@ -96,16 +96,16 @@ symbol-new <target>
 
 ```bash
 # Build the project (by default uses SML/NJ)
-symbol make
+./symbol make
 
 # Build the project with MLton (takes longer, but much faster executable)
-symbol make with=mlton
+./symbol make with=mlton
 
 # Build the project (by default uses MLton), then install to ~/.local/bin
-symbol install
+./symbol install
 
 # same as above, but installs to /usr/local/bin
-symbol install prefix=/usr/local
+./symbol install prefix=/usr/local
 ```
 
 ### Help
@@ -115,7 +115,7 @@ symbol install prefix=/usr/local
 symbol-new --help
 
 # Local
-symbol --help
+./symbol --help
 ```
 
 
