@@ -8,7 +8,13 @@
 
 Symbol is a work in progress build tool for Standard ML. It's designed to work
 alongside and on top of existing SML build tools, like SML/NJ's CM and MLton's
-MLBasis files. Symbol's key features are:
+MLBasis files.
+
+TODO(jez) Screencast
+
+- - -
+
+Symbol's key features are:
 
 - **Designed to build executables**
 
@@ -42,14 +48,12 @@ MLBasis files. Symbol's key features are:
   that Symbol does not come with yet another file format to configure your
   project; just keep using `*.cm` files for SML/NJ and `*.mlb` files for MLton.
 
-TODO(jez) Screencast
+## Install
 
-## Install globally
-
-Global installation is **only required** by the collaborators who initially set
-up symbol in a project. The global command is called `symbol-new` and is solely
-for scaffolding new projects. Once a Symbol project has been created, a script
-called `symbol` will exist locally within that project.
+Installing Symbol globally is **only required** by the collaborators who
+initially set up new SML projects. The global command is called `symbol-new` and
+is used solely for scaffolding new projects. Once a Symbol project has been
+created, a script called `symbol` will exist locally within that project.
 
 ### macOS
 
@@ -81,23 +85,20 @@ will instead install to `/usr/local/bin/symbol-new`.
 
 ## Quickstart
 
-Create a new project with the global command:
+### Creating a new project
 
 ```bash
 symbol-new <target>
+# where `<target>` is the name to call the executable for your project.
 ```
 
-This creates a new folder called `<target>` and initializes it with build
-files and a "Hello, world!" program to get your project started.
-
-Once the global `symbol-new` has been used to scaffold a new project, these
-commands are availble:
+### Working with an existing project
 
 ```bash
 # Build the project (by default uses SML/NJ)
 symbol make
 
-# Build the project with MLton (takes longer, but makes faster executable)
+# Build the project with MLton (takes longer, but much faster executable)
 symbol make with=mlton
 
 # Build the project (by default uses MLton), then install to ~/.local/bin
@@ -107,8 +108,7 @@ symbol install
 symbol install prefix=/usr/local
 ```
 
-For complete usage information, be sure to check the help output of both the
-global and local command:
+### Help
 
 ```bash
 # Global
@@ -150,31 +150,28 @@ TODO(jez) set up https://symbol.sh
 
 ## Contributing
 
-To learn more about historical context and implementation decisions:
+To learn about historical context and implementation decisions:
 
 - Read [DECISIONS.md](DECISIONS.md)
 
-To set up your dev environment (macOS):
-
-```
+To set up your development environment:
+```bash
+# macOS:
 brew bundle
+
+# linux: install the packages listed in ./Brewfile
 ```
 
-To run the lint checks:
+For developing on Symbol locally:
 
-```
+```bash
+# To run the lint checks:
 make lint
-```
 
-To run the tests:
-
-```
+# To run the tests:
 make test
-```
 
-To re-record the snapshot tests:
-
-```
+# To re-record the snapshot tests:
 make test update=1
 ```
 
