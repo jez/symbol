@@ -6,11 +6,11 @@
 
 🚧 This project is unfinished and ongoing. Pardon our ~~dust~~ TODOs. 🚧
 
-Symbol is a work in progress build tool for Standard ML. It's designed to work
-alongside and on top of existing SML build tools, like SML/NJ's CM and MLton's
-MLBasis files.
+Symbol is a build tool for Standard ML. It's designed to work alongside and on
+top of existing SML build tools, like SML/NJ's CM and MLton's MLBasis files.
 
-TODO(jez) Screencast
+<!-- TODO(jez) screencast / asciicast -->
+<!-- TODO(jez) set up https://symbol.sh -->
 
 - - -
 
@@ -92,7 +92,7 @@ symbol-new <target>
 # where `<target>` is the name to call the executable for your project.
 ```
 
-### Working with an existing project
+### Builing a Symbol project
 
 ```bash
 # Build the project (by default uses SML/NJ)
@@ -121,31 +121,86 @@ symbol-new --help
 
 ## Tips
 
-TODO(jez) These tips are mostly fragments right now
+These are some general tips for working with Symbol and Standard ML.
 
-- You're free to structure your project however you want as long as
-  - it builds cleanly with just your `*.cm` file and/or `*.mlb` file
-    - these files are in the top-level and are named how you want your
-      executable named
-  - these build files export a `Main.main` function
-- in particular, you can pull in dependencies yourself and put them wherever you
-  want (so you can use smackage if you want to)
+### Project Structure
 
-- Make variables
-  - MLTONFLAGS (profiling)
-  - target (two executables)
-  - main (main function called something else)
+Symbol adds an initial project structure with a `src/` folder. Feel free to
+arrange the SML source files however you want, and pull in whatever dependencies
+you want. **However**:
 
-- consider adding .symbol-work/bin to your PATH
+- There must always be either a `<target>.cm` or `<target>.mlb` in the same
+  folder as the `symbol` script.
 
-- Your sources.cm file should not try to hide anything.
-  This makes it easier to reuse your sources.cm file for tests.
-  If you want to keep things private when writing a library, expose a separate
-  CM file for your library users with only the public interface.
+- The `<target>.cm` must make available a `Main.main` function.
+  - This function is given directly to the `ml-build` command.
+  - See the [CM User Guide] for more information.
 
-## TODO
+- The choice for `<target>` cannot easily be changed after running `symbol-new`.
+  - If you do want to change it, you'll have to manually edit the `target`
+    variables in `./symbol` and `./.symbol.mk`
 
-TODO(jez) set up https://symbol.sh
+And then a suggestion: keep your `<target>.cm` and `<target>.mlb` files very
+transparent. Don't try to hide intermediate signatures, structures, or functors.
+This will make it easier to test your code.
+
+If you intend your project to produce **both** an executable and a library, have
+a separate CM file that hides internal implementation details from downstream
+users of your library, and keep the one that exposes everything.
+
+[CM User Guide]: https://www.smlnj.org/doc/CM/new.pdf
+
+### Your PATH
+
+There are a few folders you might want to add or make sure are in your PATH. To
+add all of the below folders to your PATH, add these lines to your bashrc or
+zshrc:
+
+```bash
+export PATH="$PATH:.symbol-work/bin"
+export PATH="$PATH:."
+export PATH="$PATH:$HOME/.local/bin"
+```
+
+The folders themselves are:
+
+-   `.symbol-work/bin`
+
+    If this folder is in your PATH, you can replace
+
+    ```
+    ❯ .symbol-work/bin/my-target
+    ```
+
+    with just
+
+    ```
+    ❯ my-target
+    ```
+
+-   `.` (the current directory)
+
+    If this folder is in your PATH, you can replace
+
+    ```
+    ❯ ./symbol make
+    ```
+
+    with just
+
+    ```
+    ❯ symbol make
+    ```
+
+-   `$HOME/.local/bin`
+
+    This is the place where `./symbol install` puts executables by default.
+    If this folder is *not* in your PATH, you can use `prefix=...` to specify a
+    folder that is on your PATH. For example:
+
+    ```
+    ./symbol install prefix=/usr/local
+    ```
 
 
 ## Contributing
@@ -155,6 +210,7 @@ To learn about historical context and implementation decisions:
 - Read [DECISIONS.md](DECISIONS.md)
 
 To set up your development environment:
+
 ```bash
 # macOS:
 brew bundle
