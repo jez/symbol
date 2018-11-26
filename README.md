@@ -4,12 +4,13 @@
 
 > A build tool for Standard ML
 
-🚧 This project is unfinished and ongoing. Pardon our ~~dust~~ TODOs. 🚧
-
 Symbol is a build tool for Standard ML. It's designed to work alongside and on
 top of existing SML build tools, like SML/NJ's CM and MLton's MLBasis files.
 
-<!-- TODO(jez) screencast / asciicast -->
+Here's a quick screencast to show off its features:
+
+[![A quick demo of Symbol](https://asciinema.org/a/JjPtmatmrkmPhbkkNF1XHDKM4.svg)](https://asciinema.org/a/JjPtmatmrkmPhbkkNF1XHDKM4)
+
 <!-- TODO(jez) set up https://symbol.sh -->
 
 - - -
