@@ -7,10 +7,12 @@ language: generic
 # TODO(jez) Test on both macOS and Ubuntu
 # matrix:
 
-os: osx
+os:
+  - linux
+  - osx
 
 install:
-  - brew bundle
+  - bash tests/travis-install.sh
 
 script:
   - make lint

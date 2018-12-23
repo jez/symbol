@@ -179,13 +179,13 @@ main() {
       # Check to see if "make: Nothing to be done for `make'" would be printed
       # https://stackoverflow.com/questions/7577052
       if make -f .symbol.mk --question "$SUBCOMMAND" "with=$WITH" \
-          ${MAKE_VARS[@]+"${MAKE_VARS[@]}"} 3>&1 > .symbol-work/debug.log 2>&1; then
+          ${MAKE_VARS[@]+"${MAKE_VARS[@]}"} 3>&1 >> .symbol-work/debug.log 2>&1; then
         return
       fi
 
       # Build succeeded. The make target should have printed output.
       if make -f .symbol.mk "$SUBCOMMAND" "with=$WITH" \
-          ${MAKE_VARS[@]+"${MAKE_VARS[@]}"} 3>&1 > .symbol-work/debug.log 2>&1; then
+          ${MAKE_VARS[@]+"${MAKE_VARS[@]}"} 3>&1 >> .symbol-work/debug.log 2>&1; then
         return
       fi
 
@@ -195,6 +195,7 @@ main() {
         cat .symbol-work/error.log
         error "Building with '$WITH' failed. See output above."
         info  "(Debug output is in .symbol-work/debug.log)"
+        exit 1
       elif [ -f .symbol-work/debug.log ]; then
         # Exceptional failure. Probably something is wrong in the Makefile.
         cat .symbol-work/debug.log
