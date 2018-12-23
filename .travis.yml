@@ -12,7 +12,7 @@ os:
   - osx
 
 install:
-  - brew bundle
+  - tests/travis-install.sh
 
 script:
   - make lint
