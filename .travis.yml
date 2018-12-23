@@ -12,7 +12,7 @@ os:
   - osx
 
 install:
-  - tests/travis-install.sh
+  - bash tests/travis-install.sh
 
 script:
   - make lint
