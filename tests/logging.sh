@@ -34,3 +34,15 @@ fatal() {
   error "$@"
   exit 1
 }
+
+travis_fold_start() {
+  local fold_name="$1"
+  local fold_msg="$2"
+  echo "travis_fold:start:$fold_name"
+  info "$fold_msg"
+}
+
+travis_fold_end() {
+  local fold_name="$1"
+  echo "travis_fold:end:$fold_name"
+}
