@@ -18,7 +18,7 @@ case "$TRAVIS_OS_NAME" in
     scversion=v0.6.0
     wget "https://storage.googleapis.com/shellcheck/shellcheck-${scversion}.linux.x86_64.tar.xz"
     tar --xz -xvf shellcheck-"${scversion}".linux.x86_64.tar.xz
-    sudo cp shellcheck-"${scversion}"/shellcheck /usr/bin/
+    sudo cp shellcheck-"${scversion}"/shellcheck /usr/local/bin
     shellcheck --version
 
     travis_fold_end shellcheck
