@@ -60,7 +60,7 @@ for test in "${tests[@]}"; do
   git clean -dfX &> /dev/null
 
   if ! [ -x "$test" ]; then
-    if ! [ "$test" = "tests/logging.sh" ]; then
+    if ! [ "$test" = "tests/logging.sh" ] && ! [ "$test" = "tests/travis-install.sh" ]; then
       skipped_tests+=("$test")
       info "$test"
       warn "└─ test not executable, skipping."
