@@ -15,10 +15,10 @@ case "$TRAVIS_OS_NAME" in
     travis_fold_start shellcheck "Installing shellcheck..."
 
     # We need at least version v0.5.0 for version parity with macOS
-    scversion=v0.5.0
+    scversion=v0.6.0
     wget "https://storage.googleapis.com/shellcheck/shellcheck-${scversion}.linux.x86_64.tar.xz"
     tar --xz -xvf shellcheck-"${scversion}".linux.x86_64.tar.xz
-    cp shellcheck-"${scversion}"/shellcheck /usr/bin/
+    sudo cp shellcheck-"${scversion}"/shellcheck /usr/bin/
     shellcheck --version
 
     travis_fold_end shellcheck
