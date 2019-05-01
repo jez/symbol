@@ -37,7 +37,7 @@ in_color() {
 }
 
 info() {
-  echo "$(in_color "$cyan" "[INFO]") $*"
+  echo "$(in_color "$cyan" "[ .. ]") $*"
 }
 
 warn() {

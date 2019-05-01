@@ -34,8 +34,8 @@ Make variables:
 
 --------------------------------------------------------------------------
 [ERR!] This command does not accept positional arguments.
-[INFO] subcommand: make
-[INFO] argv: foo
+[ .. ] subcommand: make
+[ .. ] argv: foo
 --------------------------------------------------------------------------
 [ERR!] Cannot build using 'with=foo'. Valid values: smlnj, mlton
 

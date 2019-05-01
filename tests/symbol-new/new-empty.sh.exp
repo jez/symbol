@@ -1,5 +1,5 @@
-[INFO] Making directory 'foo/'...
+[ .. ] Making directory 'foo/'...
 [ OK ] Added the 'symbol' command to your project.
 [WARN] Did not detect a file named foo.cm or foo.mlb.
-[INFO] The symbol command depends on these files to build your project.
-[INFO] You will have to create at least one of these files before using symbol.
+[ .. ] The symbol command depends on these files to build your project.
+[ .. ] You will have to create at least one of these files before using symbol.
