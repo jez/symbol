@@ -1,5 +1,19 @@
 #!/usr/bin/env bash
 
+# ============================================================================
+#
+#   This file was generated with 'symbol-new TARGET'
+#   Do NOT delete this file!
+#   This file should be checked into version control.
+#
+#   For usage information, run
+#
+#       ./symbol help
+#
+#   or visit https://github.com/jez/symbol
+#
+# ============================================================================
+
 set -euo pipefail
 
 # cd into folder where the 'symbol' script is located, or quit (defensive)
