@@ -246,6 +246,7 @@ To make a new snapshot test:
 To bump the version:
 
 - Update the VERSION in `symbol-new`
+- Update the version test output (`version.sh.exp`)
 - Commit the change, and create a new git tag with that version
 - Make a new release on GitHub (`hub release`)
 - Update the Homebrew formula
