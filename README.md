@@ -89,8 +89,13 @@ will instead install to `/usr/local/bin/symbol-new`.
 ### Creating a new project
 
 ```bash
+# Given `<target>` is the name to call the executable for your project:
 symbol-new <target>
-# where `<target>` is the name to call the executable for your project.
+
+# or, to create a new project with minimal scaffolding:
+symbol-new <target> --empty
+
+# ^ This also works to initialize an existing project.
 ```
 
 ### Builing a Symbol project
