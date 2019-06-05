@@ -182,8 +182,12 @@ if [ -z "$TARGET" ]; then
   error "Missing required argument: <target>"
   print_help
   exit 1
-elif grep '[^0-9A-Za-z_-]' <<< "$TARGET"; then
+elif grep -q '[^0-9A-Za-z_-]' <<< "$TARGET"; then
   error "<target> ($TARGET) must contain only alphanumeric, underscore, or hyphen"
+  if [ "$TARGET" = "." ]; then
+    info "If you are trying to initialize a directory that already exists, do so from"
+    info "the parent directory."
+  fi
   print_help
   exit 1
 fi
